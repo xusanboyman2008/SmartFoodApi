@@ -13,6 +13,7 @@ dp = Dispatcher(storage=MemoryStorage())
 
 class Registration(StatesGroup):
     phone = State()
+    home = State()
 
 @dp.message(CommandStart())
 async def start(message: Message,state: FSMContext):
@@ -33,8 +34,12 @@ async def get_phone(message: Message, state: FSMContext):
         )
     await state.update_data(phone=phone)
     await state.clear()
+    await state.set_state(Registration.home)
 
 
+@dp.message(Registration.home)
+async def home(message: Message, state: FSMContext):
+    await message.answer(text='SmartFood bosh sahifasi',reply_markup=InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='')]]))
 
 def main():
     asyncio.run(dp.start_polling(bot,skip_updates=True))
