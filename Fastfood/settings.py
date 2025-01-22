@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$a38hu7ekz@_47d*uec4e_3@27k6fn9y_f)81$w6#p8@#c&=z9'
+# SECRET_KEY = 'django-insecure-$a38hu7ekz@_47d*uec4e_3@27k6fn9y_f)81$w6#p8@#c&=z9'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,12 +89,10 @@ WSGI_APPLICATION = 'Fastfood.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3', }}
+# database_url = os.environ.get('DATABASE_URL')
+database_url = 'postgresql://sql_lzou_user:AQWsaaKsSs19f0oJ2AMOd9kHcqq4QhUh@dpg-cu5t7252ng1s73bjna0g-a.oregon-postgres.render.com/sql_lzou'
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 
 # Password validation
