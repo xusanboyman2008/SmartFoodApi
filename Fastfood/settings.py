@@ -90,8 +90,8 @@ WSGI_APPLICATION = 'Fastfood.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3', }}
-# database_url = os.environ.get('DATABASE_URL')
-database_url = 'postgresql://sql_lzou_user:AQWsaaKsSs19f0oJ2AMOd9kHcqq4QhUh@dpg-cu5t7252ng1s73bjna0g-a.oregon-postgres.render.com/sql_lzou'
+database_url = os.environ.get('DATABASE_URL')
+# database_url = 'postgresql://smart_food_user:IAb8lvnJBTGbiJBpol4Yti6k5yhRuC2o@dpg-cu8i7t8gph6c73cpshe0-a.oregon-postgres.render.com/smart_food'
 DATABASES['default'] = dj_database_url.parse(database_url)
 
 
