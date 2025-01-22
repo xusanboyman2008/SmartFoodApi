@@ -16,8 +16,23 @@ class Registration(StatesGroup):
 
 @dp.message(CommandStart())
 async def start(message: Message,state: FSMContext):
-    await bot.send_message(chat_id=message.from_user.id, text=message.text,reply_markup=ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Share contact 📞')]],resize_keyboard=True))
+    await bot.send_message(chat_id=message.from_user.id, text=message.text,reply_markup=ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Share contact 📞',request_contact=True)]],resize_keyboard=True))
     await state.set_state(Registration.phone)
+
+@dp.message(Registration.phone)
+async def get_phone(message: Message, state: FSMContext):
+    global phone
+    if message.text:
+        phone = message.text
+    if message.contact:
+        phone = message.contact.phone_number
+    else:
+        await message.answer(
+            text='📞 **Iltimos, o`zingizning telefon raqamingizni yuboring** 😊\n\n'
+                 'Agar raqamingizni jo`natgan bo`lsangiz, pastdagi tugmani bosing yoki raqamingizni qo`lda kiriting. 🔢'
+        )
+    await state.update_data(phone=phone)
+    await state.clear()
 
 
 
