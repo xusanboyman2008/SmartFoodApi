@@ -39,7 +39,13 @@ async def get_phone(message: Message, state: FSMContext):
 
 @dp.message(Registration.home)
 async def home(message: Message, state: FSMContext):
-    await message.answer(text='SmartFoodan buyurtma qilish',reply_markup=InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='Buyurtmani boshlash 😋',callback_data='')]]))
+    await message.answer(text='SmartFoodan buyurtma qilish boshlash',reply_markup=InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='Buyurtmani boshlash 😋',callback_data='https://smartfoodapi.onrender.com/api/')]]))
+
+def get_data(array):
+    print(array)
+
+
+
 
 def main():
     asyncio.run(dp.start_polling(bot,skip_updates=True))

@@ -37,7 +37,7 @@ class Product(models.Model):
     short_video = models.ImageField(default='False',blank=True)
     status=models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=False)
-    special_offer = models.ForeignKey(SpacialOffer, on_delete=models.CASCADE,blank=True,null=True)
+    special_offer = models.ForeignKey(SpacialOffer, on_delete=models.CASCADE,blank=True,null=True,default=None)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     def __str__(self):
@@ -52,12 +52,12 @@ class ProductQuantity(models.Model):
     def __str__(self):
         return f"ProductQuantity ID: {self.id}"  # Ensure it returns a string
 
-    # def price_quantity(self):
-        # return (
-        #     (self.product.price - (self.product.price / 100 * self.product.special_offer.discount)) * self.quantity
-        #     if self.product.special_offer and self.product.special_offer.status
-        #     else self.product.price * self.quantity
-        # )
+    def price_quantity(self):
+        return (
+            (self.product.price - (self.product.price / 100 * self.product.special_offer.discount)) * self.quantity
+            if self.product.special_offer and self.product.special_offer.status
+            else self.product.price * self.quantity
+        )
 
 
 
@@ -74,18 +74,19 @@ class Checkout(models.Model):
     delivery_cost = models.FloatField(default=0, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.latitude
 
-    # def total_cost(self):
-    #     return sum(product.price_quantity() for product in self.products.all())+self.delivery_cost
-    #
-    # def save(self, *args, **kwargs):
-    #     self.total_price = self.total_cost()
-    #     super().save(*args, **kwargs)
-    #
-    # class Meta:
-    #     ordering = ['-created_at']
+    def total_cost(self):
+    # Calculate total cost based on products and delivery cost
+        product_total = sum(
+            product.price_quantity() for product in self.products.all()
+        )
+        return product_total + (self.delivery_cost or 0)
+
+
+    class Meta:
+        ordering = ['-created_at']
+    def __str__(self):
+            return str(self.id)
 
 
 
