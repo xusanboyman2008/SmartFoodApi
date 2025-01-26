@@ -1,4 +1,6 @@
+from flask import redirect
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter
 
 from api.Serializer import ProductSerializer, CategorySerializer, CheckoutSerializer, ProductQuantitySerializer, \
     SpacialOfferSerializer
@@ -28,4 +30,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['category__name']
 
+
+def res(request):
+    return redirect('api')

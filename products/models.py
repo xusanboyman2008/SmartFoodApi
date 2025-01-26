@@ -79,4 +79,4 @@ class Checkout(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return str(self.id)
+        return self.id

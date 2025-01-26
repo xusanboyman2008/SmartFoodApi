@@ -53,14 +53,6 @@ class CheckoutSerializer(serializers.ModelSerializer):
             'longitude', 'created_at', 'delivery_cost', 'total_price'
         ]
 
-    def create(self, validated_data):
-        product_ids = validated_data.pop('products', [])
-        user = validated_data.pop('user')
-        checkout = Checkout.objects.create(user=user, **validated_data)
-        checkout.products.set(product_ids)
-        bot.get_data(validated_data)
-        return checkout
-
 
 
 

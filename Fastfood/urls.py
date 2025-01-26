@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
+from api import views
 from api.views import ProductViewSet, CheckoutViewSet, CategoryViewSet, \
     SpacialOfferViewSet, ProductQuantityViewSet
 
@@ -38,6 +39,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls),name='api'),
     path('user/', include('User.urls')),
+
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
