@@ -1,3 +1,5 @@
+import base64
+
 from rest_framework import serializers
 
 from products.models import Product, Checkout, ProductQuantity, Category, SpacialOffer
@@ -25,6 +27,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'id', 'name', 'category', 'description', 'price', 'status',
             'image', 'animation', 'categories', 'created_at', 'updated_at'
         ]
+
 
 
 class ProductQuantitySerializer(serializers.ModelSerializer):

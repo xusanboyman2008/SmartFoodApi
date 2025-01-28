@@ -34,8 +34,8 @@ class Product(models.Model):
     name = models.CharField(max_length=100, null=False)
     price = models.FloatField(default=0)
     description = models.TextField(null=False)
-    image = models.CharField(max_length=10000, null=False)
-    animation = models.CharField(max_length=100000, null=True,blank=True)
+    image = models.ImageField(null=False,upload_to='media')
+    animation = models.ImageField(default='no', blank=True,upload_to='media')
     status = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
     # special_offer = models.ForeignKey(SpacialOffer, on_delete=models.CASCADE, blank=True, null=True, default=None)
@@ -44,6 +44,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.name}"
+
 
     class Meta:
         ordering = ['category']
