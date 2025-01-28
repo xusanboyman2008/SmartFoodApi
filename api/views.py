@@ -33,6 +33,17 @@ class ProductViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter]
     search_fields = ['category__name']
 
+    def get_queryset(self):
+        """
+        Optionally restrict the returned products to a specific category
+        by filtering against the `category_name` query parameter in the URL.
+        """
+        queryset = super().get_queryset()
+        category_name = self.request.query_params.get('category_name', None)
+        if category_name:
+            queryset = queryset.filter(category__name__icontains=category_name)
+        return queryset
+
 
 def res(request):
     return redirect('api')

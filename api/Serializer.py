@@ -1,5 +1,5 @@
 from rest_framework import serializers
-import bot
+
 from products.models import Product, Checkout, ProductQuantity, Category, SpacialOffer
 
 
@@ -17,8 +17,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(source='category', read_only=True)  # Read-only detailed category
-    special_offer_details = SpacialOfferSerializer(source='special_offer',
-                                                   read_only=True)  # Read-only special offer details
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(),
                                                   write_only=True)  # Write-only for category
     special_offer = serializers.PrimaryKeyRelatedField(queryset=SpacialOffer.objects.all(), write_only=True)
@@ -27,8 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             'id', 'name', 'category', 'special_offer', 'description', 'price', 'status',
-            'image', 'short_video', 'categories',
-            'special_offer_details', 'created_at', 'updated_at'
+            'image', 'animation', 'categories', 'created_at', 'updated_at'
         ]
 
 
@@ -37,9 +34,7 @@ class ProductQuantitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductQuantity
-        fields = ['id', 'product_id', 'quantity','product']
-
-
+        fields = ['id', 'product_id', 'quantity', 'product']
 
 
 class CheckoutSerializer(serializers.ModelSerializer):
@@ -52,15 +47,3 @@ class CheckoutSerializer(serializers.ModelSerializer):
             'id', 'user', 'products', 'product_details', 'latitude',
             'longitude', 'created_at', 'delivery_cost', 'total_price'
         ]
-
-
-
-
-
-
-
-
-
-
-
-
