@@ -19,12 +19,10 @@ class ProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(source='category', read_only=True)  # Read-only detailed category
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(),
                                                   write_only=True)  # Write-only for category
-    special_offer = serializers.PrimaryKeyRelatedField(queryset=SpacialOffer.objects.all(), write_only=True)
-
     class Meta:
         model = Product
         fields = [
-            'id', 'name', 'category', 'special_offer', 'description', 'price', 'status',
+            'id', 'name', 'category', 'description', 'price', 'status',
             'image', 'animation', 'categories', 'created_at', 'updated_at'
         ]
 
