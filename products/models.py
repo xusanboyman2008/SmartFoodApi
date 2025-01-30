@@ -77,3 +77,11 @@ class Checkout(models.Model):
 
     def __str__(self):
         return self.id
+
+class Order(models.Model):
+    id = models.AutoField(primary_key=True)
+    checkouts = models.ManyToManyField(Checkout, related_name="basket_id")
+    is_delivered = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering = ['id']
