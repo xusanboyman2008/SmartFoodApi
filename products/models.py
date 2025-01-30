@@ -80,7 +80,7 @@ class Checkout(models.Model):
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
-    checkouts = models.ManyToManyField(Checkout, related_name="basket_id")
+    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, related_name="orders")
     is_delivered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
