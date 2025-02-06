@@ -94,7 +94,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10 MB
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3', }}
 # database_url = os.environ.get('DATABASE_URL')
-database_url = 'postgresql://fastfood_laqr_user:vv0WjLbs8pujBoo0iJIg83yiR4QXb1KA@dpg-cui8j6in91rc73bg96lg-a.oregon-postgres.render.com/fastfood_laqr'
+database_url = 'postgresql://fastfood_5s4u_user:ncpv7ekQ4vQ1eyHAcIZAU8d7TNPS2ri7@dpg-cuic0n0gph6c73eiu2ug-a.oregon-postgres.render.com/fastfood_5s4u'
 DATABASES['default'] = dj_database_url.parse(database_url)
 
 
