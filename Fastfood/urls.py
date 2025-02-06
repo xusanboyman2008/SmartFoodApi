@@ -22,13 +22,12 @@ from rest_framework.routers import DefaultRouter
 
 from api import views
 from api.views import ProductViewSet, CheckoutViewSet, CategoryViewSet, \
-    SpacialOfferViewSet, ProductQuantityViewSet
+     ProductQuantityViewSet
 
 router = DefaultRouter()
 
 # Registering routes without using the `check_token` decorator
 router.register(r'products', ProductViewSet)
-router.register(r'offers', SpacialOfferViewSet )
 router.register(r'checkouts', CheckoutViewSet)
 router.register(r'categories', CategoryViewSet)
 router.register('quantity',ProductQuantityViewSet)

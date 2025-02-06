@@ -2,14 +2,9 @@ from flask import redirect
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
 
-from api.Serializer import ProductSerializer, CategorySerializer, CheckoutSerializer, ProductQuantitySerializer, \
-    SpacialOfferSerializer
-from products.models import Product, Category, Checkout, ProductQuantity, SpacialOffer
+from api.Serializer import ProductSerializer, CategorySerializer, CheckoutSerializer, ProductQuantitySerializer
+from products.models import Product, Category, Checkout, ProductQuantity
 
-
-class SpacialOfferViewSet(viewsets.ModelViewSet):
-    queryset = SpacialOffer.objects.all()
-    serializer_class = SpacialOfferSerializer
 
 
 class ProductQuantityViewSet(viewsets.ModelViewSet):
@@ -39,7 +34,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         by filtering against the `category_name` query parameter in the URL.
         """
         queryset = super().get_queryset()
-        category_name = self.request.query_params.get('category_name', None)
+        category_name = self.request.query_params.get('category_nam e', None)
         if category_name:
             queryset = queryset.filter(category__name__icontains=category_name)
         return queryset

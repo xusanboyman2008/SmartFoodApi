@@ -87,14 +87,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 WSGI_APPLICATION = 'Fastfood.wsgi.application'
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10 MB
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3', }}
-database_url = os.environ.get('DATABASE_URL')
-# database_url = 'postgresql://smart_food_user:IAb8lvnJBTGbiJBpol4Yti6k5yhRuC2o@dpg-cu8i7t8gph6c73cpshe0-a.oregon-postgres.render.com/smart_food'
+# database_url = os.environ.get('DATABASE_URL')
+database_url = 'postgresql://fastfood_laqr_user:vv0WjLbs8pujBoo0iJIg83yiR4QXb1KA@dpg-cui8j6in91rc73bg96lg-a.oregon-postgres.render.com/fastfood_laqr'
 DATABASES['default'] = dj_database_url.parse(database_url)
 
 

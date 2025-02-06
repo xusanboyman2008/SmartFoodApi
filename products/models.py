@@ -9,33 +9,21 @@ class Category(models.Model):
     status = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
+
     class Meta:
         ordering = ['name']
 
 
-class SpacialOffer(models.Model):
-    id = models.AutoField(primary_key=True)
-    status = models.BooleanField(default=False)
-    discount = models.IntegerField(default=0)
-    expiration_date = models.DateField(null=False)
-
-    class Meta:
-        ordering = ['-expiration_date', 'discount']
-
-    def __str__(self):
-        return f"{self.discount}% until {self.expiration_date}"
-
-
-# Create your models here.
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False)
     price = models.FloatField(default=0)
     description = models.TextField(null=False)
-    image = models.ImageField(null=False,upload_to='media')
-    animation = models.ImageField(default='no', blank=True,upload_to='media')
+    image = models.ImageField(null=False, upload_to='media')
+    animation = models.ImageField(default='no', blank=True, upload_to='media', null=True)
     status = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
     # special_offer = models.ForeignKey(SpacialOffer, on_delete=models.CASCADE, blank=True, null=True, default=None)
@@ -45,9 +33,15 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.id} - {self.name}"
 
-
     class Meta:
         ordering = ['category']
+
+
+class Sale(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=False)
+    description = models.TextField(null=False)
+    expired_at = models.DateTimeField()
 
 
 class ProductQuantity(models.Model):
@@ -60,6 +54,19 @@ class ProductQuantity(models.Model):
         return f"ProductQuantity ID: {self.id}"
 
 
+class Location_User(models.Model):
+    id = models.AutoField(primary_key=True)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+    address = models.TextField(null=False)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class State_For_State(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.TextField(null=False)
+
 
 class Checkout(models.Model):
     id = models.AutoField(primary_key=True)
@@ -68,9 +75,10 @@ class Checkout(models.Model):
     latitude = models.FloatField(null=False, blank=False)
     longitude = models.FloatField(null=False, blank=False)
     total_price = models.FloatField(default=0, blank=True)
+    address = models.TextField(null=False)
     delivery_cost = models.FloatField(default=0, null=True, blank=True)
+    delivery_option = models.TextField(null=True, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
-
 
     class Meta:
         ordering = ['-created_at']
@@ -78,10 +86,14 @@ class Checkout(models.Model):
     def __str__(self):
         return self.id
 
+
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
-    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, related_name="orders")
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE)
     is_delivered = models.BooleanField(default=False)
+    status = models.CharField(max_length=100, default='Tastiqlamoqda')
     created_at = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         ordering = ['id']

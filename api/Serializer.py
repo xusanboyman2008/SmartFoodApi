@@ -1,14 +1,6 @@
-import base64
-
 from rest_framework import serializers
 
-from products.models import Product, Checkout, ProductQuantity, Category, SpacialOffer
-
-
-class SpacialOfferSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SpacialOffer
-        fields = '__all__'
+from products.models import Product, Checkout, ProductQuantity, Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -21,13 +13,13 @@ class ProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(source='category', read_only=True)  # Read-only detailed category
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(),
                                                   write_only=True)  # Write-only for category
+
     class Meta:
         model = Product
         fields = [
             'id', 'name', 'category', 'description', 'price', 'status',
             'image', 'animation', 'categories', 'created_at', 'updated_at'
         ]
-
 
 
 class ProductQuantitySerializer(serializers.ModelSerializer):
