@@ -22,7 +22,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, null=False)
     price = models.FloatField(default=0)
     description = models.TextField(null=False)
-    image = models.ImageField(null=False, upload_to='media')
+    image = models.ImageField(null=True, upload_to='media',blank=True)
     animation = models.ImageField(default='no', blank=True, upload_to='media', null=True)
     status = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
