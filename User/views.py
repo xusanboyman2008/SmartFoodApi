@@ -9,6 +9,6 @@ def get_user_role_and_tg_id(request):
         token = request.POST.get("token")
         user = User.objects.get(token=token)
         if user:
-            return JsonResponse({'id':user.id,'tg_id': user.tg_id, 'role': user.role})
-        return JsonResponse({'message':'error'})
+            return JsonResponse({'id':user.id,'tg_id': user.tg_id, 'role': user.role},200)
+        return JsonResponse({'message':'error'},404)
     return JsonResponse({'message':'error method'})
